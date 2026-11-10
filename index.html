@@ -71,6 +71,10 @@
   .sb-id img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--pink);flex:none}
   .sb-id b{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:.9rem;line-height:1.05;display:block;letter-spacing:.01em;color:#fff}
   .sb-id span{color:rgba(255,255,255,.64);font-size:.72rem;display:block;margin-top:.12rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sb-contact{margin-left:auto;flex:none;font-family:var(--display);font-weight:800;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;background:var(--pink);color:#fff;padding:.5rem 1.15rem;border-radius:999px;box-shadow:0 4px 14px rgba(224,36,61,.35);transition:.18s;white-space:nowrap}
+  .sb-contact:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 6px 18px rgba(224,36,61,.45)}
+  @keyframes cardPulse{0%{transform:scale(1)}28%{transform:scale(1.05)}58%{transform:scale(.985)}100%{transform:scale(1)}}
+  .contact-card.pulse{animation:cardPulse .85s ease-in-out 2}
   .sb-cta{margin-left:auto;display:flex;align-items:center;gap:.85rem;flex:none}
   .sb-tag{text-align:right;line-height:1.15}
   .sb-tag em{display:block;font-style:normal;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:.66rem;letter-spacing:.05em;color:var(--pink)}
@@ -407,9 +411,10 @@
     <img src="assets/headshot.jpg" alt="Sathya Nadarajah">
     <div>
       <b>Sathya Nadarajah</b>
-      <span>Pharmacien · Marketing &amp; contenu santé · Antony (92)</span>
+      <span>Pharmacien · Marketing &amp; communication santé</span>
     </div>
   </div>
+  <a href="#contact" class="sb-contact" id="sbContact">Me contacter</a>
 </div>
 
 <div class="wrap">
@@ -528,7 +533,7 @@
     </div></div>
   </section>
 
-  <section class="contact rv">
+  <section class="contact rv" id="contact">
     <div class="contact-card">
       <span class="cc-sheen"></span>
       <div class="cc-emblem" aria-hidden="true"><span class="cc-q">?</span></div>
@@ -538,7 +543,6 @@
         <button class="copybtn" id="copyBtn">Copier l'e-mail</button>
       </div>
       <span class="mono-val" id="email" style="display:block;margin-top:.2rem">sathya.ndrjah@gmail.com</span>
-      <div class="cc-foot">Antony (92) · Île-de-France</div>
     </div>
   </section>
 </div>
@@ -864,6 +868,17 @@
     } else sel();
     function sel(){var r=document.createRange();r.selectNode(document.getElementById('email'));
       var s=window.getSelection();s.removeAllRanges();s.addRange(r);flash('Sélectionné')}
+  });
+
+  var sbc=document.getElementById('sbContact');
+  if(sbc) sbc.addEventListener('click',function(e){
+    e.preventDefault();
+    var c=document.getElementById('contact');
+    if(!c) return;
+    var y=c.getBoundingClientRect().top+window.pageYOffset-70; window.scrollTo({top:y,behavior:'smooth'});
+    var card=c.querySelector('.contact-card');
+    if(card){ card.onanimationend=function(){card.classList.remove('pulse')};
+      setTimeout(function(){ card.classList.remove('pulse'); void card.offsetWidth; card.classList.add('pulse'); },650); }
   });
 
   // lien "Voir mon CV" : ouvre le fold et scrolle dessus
